@@ -5,7 +5,7 @@ class Solution {
       
       fillMap(keyName, keyTime, map);
       List<String> alerts = getAlertNames(map);
-      System.out.println(map);
+      //System.out.println(map);
       Collections.sort(alerts);
       
       return alerts;
@@ -27,9 +27,9 @@ class Solution {
   
   List<String> getAlertNames(Map<String, SortedSet<Integer>> map) {
     SortedSet<String> result = new TreeSet<>();
-    
+    Deque<Integer> dq = new ArrayDeque<>();
     map.forEach( (k, v) -> {
-      Deque<Integer> dq = new ArrayDeque<>();
+      dq.clear();
       for (Integer time: v) {
         dq.offer(time);
         if (dq.peekLast() - dq.peek() > 60) {
