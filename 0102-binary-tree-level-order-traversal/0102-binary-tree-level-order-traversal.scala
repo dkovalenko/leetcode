@@ -6,28 +6,27 @@
  *   var right: TreeNode = _right
  * }
  */
-import collection.mutable.Queue
-import collection.mutable.ArrayBuffer
-
 object Solution {
   def levelOrder(root: TreeNode): List[List[Int]] = {
+    val q = collection.mutable.Queue.empty[TreeNode]
+    val buf = collection.mutable.ArrayBuffer.empty[List[Int]]
+
     if (root == null) return Nil
-    val q = Queue.empty[TreeNode]
-    val buf = ArrayBuffer.empty[List[Int]]
     q.enqueue(root)
-    
-    while (q.nonEmpty) {
-      val allCurrent = q.dequeueAll(_ => true) //Seq(TN(9),TN(20))
-      buf += allCurrent.map(_.value).toList
-      allCurrent.foreach { current => 
-        if (current.left != null) {
-          q.enqueue(current.left)
+    while(q.nonEmpty) {
+      val currentElements = q.dequeueAll(_ => true)
+      buf += currentElements.map(_.value).toList
+      currentElements.foreach { currentEl =>
+        
+        if (currentEl.left != null) {
+          q.enqueue(currentEl.left)
         }
-        if (current.right != null) {
-          q.enqueue(current.right)
+        if (currentEl.right != null) {
+          q.enqueue(currentEl.right)
         }
       }
     }
+
     buf.toList
   }
 }
